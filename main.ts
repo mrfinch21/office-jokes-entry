@@ -9,4 +9,9 @@ const JOKE =
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 mkdirSync(outDir, { recursive: true });
+// The gate scores the text only when it is 1 to 199 characters: refuse to
+// write anything outside that range instead of submitting an invalid entry.
+if (JOKE.length < 1 || JOKE.length > 199) {
+  throw new Error(`joke must be 1-199 characters, got ${JOKE.length}`);
+}
 writeFileSync(join(outDir, "entry.txt"), JOKE, "utf8");
